@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:int-twitter="http://www.springframework.org/schema/integration/twitter"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:feed="http://www.springframework.org/schema/integration/feed"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/feed http://www.springframework.org/schema/integration/feed/spring-integration-feed-2.0.xsd
+		http://www.springframework.org/schema/integration/twitter
+        http://www.springframework.org/schema/integration/twitter/spring-integration-twitter.xsd">
+
+
+    <context:component-scan base-package="com.we350z.gplusrss"/>
+    <context:property-placeholder location="classpath:social.properties"/>
+
+    <!-- input adapter -->
+  <!--  <feed:inbound-channel-adapter url="http://plus2twitter.appspot.com/115359349723436236393" channel="rssElements">
+        <int:poller fixed-rate="5000"/>
+    </feed:inbound-channel-adapter>
+
+        <int:channel id="rssElements"/>
+
+    <int:transformer input-channel="rssElements" expression="payload.title" output-channel="tweets"/>-->
+
+        <int:channel id="tweets"/>
+
+    <!-- send to twitter -->
+    <int-twitter:outbound-channel-adapter twitter-template="twitterTemplate"  channel="tweets"/>
+
+    <bean id="twitterTemplate" class="org.springframework.social.twitter.api.impl.TwitterTemplate">
+        <constructor-arg value="${twitter.oauth.consumerKey}"/>
+        <constructor-arg value="${twitter.oauth.consumerSecret}"/>
+        <constructor-arg value="${twitter.oauth.accessToken}"/>
+        <constructor-arg value="${twitter.oauth.accessTokenSecret}"/>
+    </bean>
+
+
+</beans>

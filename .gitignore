@@ -1,0 +1,15 @@
+.idea
+build
+.gradle
+.classpath
+.springBeans
+.project
+.settings
+bin
+.DS_Store
+Thumbs.db
+*.iml
+*.iws
+*.ipr
+target
+social.properties

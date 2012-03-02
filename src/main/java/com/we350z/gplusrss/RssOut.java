@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Component
 public class RssOut {
-    public void shitter(Message <SyndEntryImpl> msg) {
+    public void dump(Message <SyndEntryImpl> msg) {
         System.out.println( "===========================================");
         SyndEntryImpl payload = msg.getPayload();
         Map<String, Object> headers = msg.getHeaders();
